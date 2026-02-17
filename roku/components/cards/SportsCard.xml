@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="SportsCard" extends="Group">
+  <interface>
+    <field id="sportsData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1160" cardHeight="500" cardTitle="SCORES">
+      <LayoutGroup id="teamList"
+        layoutDirection="vert"
+        itemSpacings="[24]" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="SportsCard.brs" />
+</component>

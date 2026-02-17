@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="CountdownCard" extends="Group">
+  <interface>
+    <field id="countdownData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="960" cardHeight="660" cardTitle="COUNTDOWNS">
+      <LayoutGroup id="countdownList"
+        layoutDirection="vert"
+        itemSpacings="[20]" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="CountdownCard.brs" />
+</component>

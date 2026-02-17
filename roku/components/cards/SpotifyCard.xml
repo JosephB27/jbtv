@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="SpotifyCard" extends="Group">
+  <interface>
+    <field id="spotifyData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1160" cardHeight="500" cardTitle="SPOTIFY">
+      <!-- Now Playing state -->
+      <Group id="nowPlayingGroup" visible="false">
+        <Poster id="albumArt"
+          width="280" height="280"
+          translation="[0, 0]" />
+        <Label id="trackLabel"
+          color="0xFFFFFFFF"
+          font="font:MediumSystemFont"
+          width="750"
+          translation="[310, 0]" />
+        <Label id="artistLabel"
+          color="0xBBBBBBFF"
+          font="font:SmallSystemFont"
+          width="750"
+          translation="[310, 50]" />
+        <Label id="albumLabel"
+          color="0xBBBBBB88"
+          font="font:SmallestSystemFont"
+          width="750"
+          translation="[310, 85]" />
+        <!-- Progress bar background -->
+        <Rectangle id="progressBg"
+          color="0xFFFFFF22"
+          width="750" height="6"
+          translation="[310, 130]" />
+        <!-- Progress bar fill -->
+        <Rectangle id="progressFill"
+          color="0x00D4AAFF"
+          width="0" height="6"
+          translation="[310, 130]" />
+      </Group>
+
+      <!-- Recent Tracks state -->
+      <Group id="recentGroup" visible="false">
+        <Label id="recentHeader"
+          text="Recently Played"
+          color="0xBBBBBBCC"
+          font="font:SmallSystemFont" />
+        <LayoutGroup id="recentList"
+          layoutDirection="vert"
+          itemSpacings="[12]"
+          translation="[0, 40]" />
+      </Group>
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="SpotifyCard.brs" />
+</component>

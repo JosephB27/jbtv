@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="NewsCard" extends="Group">
+  <interface>
+    <field id="newsData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1440" cardHeight="310" cardTitle="NEWS">
+      <Label id="sourceLabel"
+        color="0x00D4AAFF"
+        font="font:SmallestSystemFont"
+        width="1340" />
+      <Label id="headlineLabel"
+        color="0xFFFFFFFF"
+        font="font:MediumSystemFont"
+        width="1340"
+        wrap="true"
+        maxLines="2"
+        translation="[0, 28]" />
+      <Label id="timeLabel"
+        color="0xBBBBBB66"
+        font="font:SmallestSystemFont"
+        translation="[0, 120]" />
+      <Label id="indexLabel"
+        color="0xBBBBBB44"
+        font="font:SmallestSystemFont"
+        horizAlign="right"
+        width="1340"
+        translation="[0, 120]" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="NewsCard.brs" />
+</component>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="GlassCard" extends="Group">
+  <interface>
+    <field id="cardWidth" type="integer" value="800" />
+    <field id="cardHeight" type="integer" value="500" />
+    <field id="cardTitle" type="string" value="" />
+    <field id="isFocused" type="boolean" value="false" />
+  </interface>
+
+  <children>
+    <!-- Shadow layer -->
+    <Rectangle id="shadow"
+      color="0x00000066"
+      translation="[8, 8]" />
+
+    <!-- Glass background -->
+    <Rectangle id="glassBg"
+      color="0xFFFFFF1F" />
+
+    <!-- Border -->
+    <Rectangle id="border"
+      color="0x00000000">
+      <Rectangle id="borderInner"
+        color="0xFFFFFF1F" />
+    </Rectangle>
+
+    <!-- Top accent line -->
+    <Rectangle id="accentLine"
+      color="0x00D4AA99"
+      height="2"
+      translation="[0, 0]" />
+
+    <!-- Title label -->
+    <Label id="titleLabel"
+      color="0xBBBBBBFF"
+      font="font:SmallestSystemFont"
+      translation="[32, 20]" />
+
+    <!-- Content area for child components -->
+    <Group id="contentArea"
+      translation="[32, 24]" />
+  </children>
+
+  <script type="text/brightscript" uri="GlassCard.brs" />
+</component>

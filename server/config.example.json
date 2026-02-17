@@ -1,0 +1,48 @@
+{
+  "user": {
+    "name": "Joseph"
+  },
+  "weather": {
+    "apiKey": "YOUR_OPENWEATHERMAP_KEY",
+    "lat": 0.0,
+    "lon": 0.0,
+    "units": "imperial"
+  },
+  "google": {
+    "calendarId": "primary",
+    "credentials": "./google-credentials.json"
+  },
+  "spotify": {
+    "clientId": "YOUR_SPOTIFY_CLIENT_ID",
+    "clientSecret": "YOUR_SPOTIFY_CLIENT_SECRET",
+    "redirectPort": 8889
+  },
+  "news": {
+    "feeds": [
+      "https://feeds.apnews.com/rss/topnews",
+      "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+    ],
+    "maxItems": 5
+  },
+  "countdowns": [
+    { "label": "Trip to Japan", "date": "2026-04-01" },
+    { "label": "Mom's Birthday", "date": "2026-06-15" }
+  ],
+  "sports": {
+    "teams": [
+      { "league": "nba", "team": "lakers" },
+      { "league": "nfl", "team": "rams" }
+    ]
+  },
+  "tickers": {
+    "stocks": ["AAPL", "TSLA", "NVDA"],
+    "crypto": ["bitcoin", "ethereum"]
+  },
+  "photos": {
+    "albumName": "Favorites",
+    "rotateIntervalSeconds": 45
+  },
+  "server": {
+    "port": 8888
+  }
+}

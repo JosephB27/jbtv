@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="QuoteCard" extends="Group">
+  <interface>
+    <field id="quoteText" type="string" value="" />
+    <field id="quoteAuthor" type="string" value="" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1440" cardHeight="310">
+      <Label id="quoteGlyph"
+        text="&#x201C;"
+        color="0x00D4AA88"
+        font="font:LargestSystemFont"
+        translation="[0, -20]" />
+      <Label id="quoteLabel"
+        color="0xFFFFFFDD"
+        font="font:SmallSystemFont"
+        width="1340"
+        wrap="true"
+        maxLines="4"
+        translation="[60, 20]" />
+      <Label id="authorLabel"
+        color="0xBBBBBB99"
+        font="font:SmallestSystemFont"
+        width="1340"
+        horizAlign="right"
+        translation="[20, 220]" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="QuoteCard.brs" />
+</component>

@@ -1,0 +1,21 @@
+{
+  "name": "jbtv-server",
+  "version": "1.0.0",
+  "description": "JBTV backend server — aggregates APIs for the Roku dashboard",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "googleapis": "^144.0.0",
+    "node-fetch": "^3.3.2",
+    "rss-parser": "^3.13.0",
+    "yahoo-finance2": "^2.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

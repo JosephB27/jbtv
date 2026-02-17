@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ClockCard" extends="Group">
+  <interface>
+    <field id="greeting" type="string" value="" />
+    <field id="period" type="string" value="" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1800" cardHeight="460">
+      <Label id="greetingLabel"
+        width="1720"
+        color="0xFFFFFFCC"
+        font="font:MediumSystemFont"
+        horizAlign="left" />
+      <Label id="timeLabel"
+        width="1720"
+        color="0xFFFFFFFF"
+        font="font:LargestSystemFont"
+        horizAlign="left"
+        translation="[0, 50]" />
+      <Label id="dateLabel"
+        width="1720"
+        color="0xBBBBBBFF"
+        font="font:SmallSystemFont"
+        horizAlign="left"
+        translation="[0, 160]" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="ClockCard.brs" />
+</component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="CalendarCard" extends="Group">
+  <interface>
+    <field id="calendarData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1160" cardHeight="660" cardTitle="TODAY'S SCHEDULE">
+      <LayoutGroup id="eventList"
+        layoutDirection="vert"
+        itemSpacings="[16]" />
+      <Label id="emptyLabel"
+        text="No meetings today"
+        color="0xBBBBBBFF"
+        font="font:SmallSystemFont"
+        translation="[0, 60]"
+        visible="false" />
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="CalendarCard.brs" />
+</component>

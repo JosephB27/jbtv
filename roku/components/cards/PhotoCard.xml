@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PhotoCard" extends="Group">
+  <interface>
+    <field id="photoData" type="assocarray" />
+    <field id="photoUrl" type="string" value="" />
+  </interface>
+  <children>
+    <!-- This component provides the photo URL for background use in MainScene -->
+    <!-- No visible card — photos display as the dashboard background -->
+  </children>
+  <script type="text/brightscript" uri="PhotoCard.brs" />
+</component>

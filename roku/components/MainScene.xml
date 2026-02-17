@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="Scene">
+  <children>
+    <!-- Background layers -->
+    <Poster id="bgBottom" width="3840" height="2160" uri="pkg:/images/bg_morning.png" />
+    <Poster id="bgTop" width="3840" height="2160" opacity="0.0" />
+    <Poster id="photoBg" width="3840" height="2160" opacity="0.0" />
+    <Rectangle id="photoOverlay" width="3840" height="2160" color="0x000000AA" opacity="0.0" />
+
+    <!-- Card grid -->
+    <Group id="cardGrid">
+      <!-- Top row -->
+      <ClockCard id="clockCard" translation="[80, 80]" />
+      <WeatherCard id="weatherCard" translation="[1960, 80]" />
+
+      <!-- Middle row -->
+      <CalendarCard id="calendarCard" translation="[80, 600]" />
+      <CountdownCard id="countdownCard" translation="[1320, 600]" />
+      <QuoteCard id="quoteCard" translation="[2360, 600]" />
+      <NewsCard id="newsCard" translation="[2360, 960]" />
+
+      <!-- Bottom row -->
+      <SpotifyCard id="spotifyCard" translation="[80, 1320]" />
+      <SportsCard id="sportsCard" translation="[1320, 1320]" />
+    </Group>
+
+    <!-- Ticker strip at bottom -->
+    <TickerCard id="tickerCard" translation="[80, 1880]" />
+
+    <!-- Photo component (invisible, just data) -->
+    <PhotoCard id="photoCard" />
+
+    <!-- Loading overlay -->
+    <Rectangle id="loadingOverlay" width="3840" height="2160" color="0x0a0a2eff">
+      <Label id="loadingLabel"
+        text="JBTV"
+        color="0x00D4AAFF"
+        font="font:LargestSystemFont"
+        horizAlign="center"
+        vertAlign="center"
+        width="3840"
+        height="2160" />
+    </Rectangle>
+  </children>
+  <script type="text/brightscript" uri="MainScene.brs" />
+</component>

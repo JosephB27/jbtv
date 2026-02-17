@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="TickerCard" extends="Group">
+  <interface>
+    <field id="tickerData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="3680" cardHeight="160">
+      <!-- Scrolling ticker strip -->
+      <Group id="tickerContainer">
+        <LayoutGroup id="tickerRow"
+          layoutDirection="horiz"
+          itemSpacings="[80]"
+          horizAlignment="left" />
+      </Group>
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="TickerCard.brs" />
+</component>

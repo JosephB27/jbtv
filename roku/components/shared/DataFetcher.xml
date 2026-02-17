@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="DataFetcher" extends="Task">
+  <interface>
+    <field id="serverUrl" type="string" />
+    <field id="pollInterval" type="integer" value="30" />
+    <field id="responseData" type="assocarray" />
+  </interface>
+  <script type="text/brightscript" uri="DataFetcher.brs" />
+</component>

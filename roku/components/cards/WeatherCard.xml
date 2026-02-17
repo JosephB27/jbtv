@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="WeatherCard" extends="Group">
+  <interface>
+    <field id="weatherData" type="assocarray" />
+  </interface>
+  <children>
+    <GlassCard id="card" cardWidth="1800" cardHeight="460" cardTitle="WEATHER">
+      <!-- Current conditions -->
+      <Group id="currentGroup">
+        <Label id="tempLabel"
+          color="0xFFFFFFFF"
+          font="font:LargestSystemFont" />
+        <Label id="feelsLikeLabel"
+          color="0xBBBBBBFF"
+          font="font:SmallestSystemFont"
+          translation="[0, 100]" />
+        <Poster id="weatherIcon"
+          width="120" height="120"
+          translation="[280, 0]" />
+        <Label id="descLabel"
+          color="0xFFFFFFCC"
+          font="font:SmallSystemFont"
+          translation="[420, 20]" />
+        <Label id="detailsLabel"
+          color="0xBBBBBB99"
+          font="font:SmallestSystemFont"
+          translation="[420, 55]" />
+        <Label id="sunLabel"
+          color="0xBBBBBB99"
+          font="font:SmallestSystemFont"
+          translation="[420, 85]" />
+      </Group>
+
+      <!-- 5-day forecast row -->
+      <LayoutGroup id="forecastRow"
+        layoutDirection="horiz"
+        itemSpacings="[60]"
+        translation="[0, 180]">
+      </LayoutGroup>
+    </GlassCard>
+  </children>
+  <script type="text/brightscript" uri="WeatherCard.brs" />
+</component>
