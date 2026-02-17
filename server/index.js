@@ -1,7 +1,6 @@
 import express from 'express';
 import config from './utils/config.js';
 import dashboardRouter from './routes/dashboard.js';
-import { startSsdpServer } from './utils/ssdp.js';
 import { networkInterfaces } from 'os';
 
 const app = express();
@@ -19,7 +18,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
 
-// Discovery endpoint — Roku can hit this to confirm it found the right server
 app.get('/api/discover', (req, res) => {
   res.json({ service: 'jbtv', version: '1.0.0', name: config.user.name });
 });
@@ -46,7 +44,4 @@ app.listen(port, '0.0.0.0', () => {
   console.log(`\nJBTV server running at http://${ip}:${port}`);
   console.log(`Dashboard: http://${ip}:${port}/api/dashboard`);
   console.log(`Health:    http://${ip}:${port}/health\n`);
-
-  // Start SSDP discovery so Roku can find us automatically
-  startSsdpServer(port);
 });
