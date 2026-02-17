@@ -20,10 +20,11 @@ function formatTime(unix, tz) {
 }
 
 export async function getWeather() {
+  const { apiKey, lat, lon, units } = config.weather;
+  if (!apiKey || String(apiKey).startsWith('YOUR_')) return null;
+
   const cached = cache.get('weather');
   if (cached) return cached;
-
-  const { apiKey, lat, lon, units } = config.weather;
   const params = `lat=${lat}&lon=${lon}&units=${units}&appid=${apiKey}`;
 
   const [current, forecast] = await Promise.all([

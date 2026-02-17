@@ -1,6 +1,8 @@
 import express from 'express';
 import config from './utils/config.js';
 import dashboardRouter from './routes/dashboard.js';
+import { startSsdpServer } from './utils/ssdp.js';
+import { networkInterfaces } from 'os';
 
 const app = express();
 const port = config.server.port;
@@ -17,6 +19,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
 
+// Discovery endpoint — Roku can hit this to confirm it found the right server
+app.get('/api/discover', (req, res) => {
+  res.json({ service: 'jbtv', version: '1.0.0', name: config.user.name });
+});
+
 app.use('/api', dashboardRouter);
 
 app.use((err, req, res, next) => {
@@ -24,8 +31,22 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
+function getLocalIp() {
+  const nets = networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === 'IPv4' && !net.internal) return net.address;
+    }
+  }
+  return '127.0.0.1';
+}
+
 app.listen(port, '0.0.0.0', () => {
-  console.log(`JBTV server running at http://0.0.0.0:${port}`);
-  console.log(`Dashboard: http://localhost:${port}/api/dashboard`);
-  console.log(`Health:    http://localhost:${port}/health`);
+  const ip = getLocalIp();
+  console.log(`\nJBTV server running at http://${ip}:${port}`);
+  console.log(`Dashboard: http://${ip}:${port}/api/dashboard`);
+  console.log(`Health:    http://${ip}:${port}/health\n`);
+
+  // Start SSDP discovery so Roku can find us automatically
+  startSsdpServer(port);
 });

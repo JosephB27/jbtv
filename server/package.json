@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "setup": "node setup.js",
+    "auth:spotify": "node -e \"import('./services/spotify.js').then(m => m.authorize())\""
   },
   "dependencies": {
     "express": "^4.21.2",

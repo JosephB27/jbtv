@@ -37,9 +37,15 @@
         color="0x00D4AAFF"
         font="font:LargestSystemFont"
         horizAlign="center"
-        vertAlign="center"
         width="3840"
-        height="2160" />
+        translation="[0, 900]" />
+      <Label id="statusLabel"
+        text="Searching for server..."
+        color="0xBBBBBB88"
+        font="font:SmallSystemFont"
+        horizAlign="center"
+        width="3840"
+        translation="[0, 1050]" />
     </Rectangle>
   </children>
   <script type="text/brightscript" uri="MainScene.brs" />

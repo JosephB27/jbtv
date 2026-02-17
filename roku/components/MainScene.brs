@@ -7,6 +7,7 @@ sub init()
     m.photoBg = m.top.findNode("photoBg")
     m.photoOverlay = m.top.findNode("photoOverlay")
     m.loadingOverlay = m.top.findNode("loadingOverlay")
+    m.statusLabel = m.top.findNode("statusLabel")
     m.currentPeriod = ""
     m.usePhotoBg = false
 
@@ -25,26 +26,44 @@ sub init()
     ' Photo background binding
     m.photoCard.observeField("photoUrl", "onPhotoUrlChange")
 
-    ' Start data fetcher
+    ' Start data fetcher with auto-discovery
     m.dataFetcher = createObject("roSGNode", "DataFetcher")
-    m.dataFetcher.serverUrl = m.constants.SERVER_URL
     m.dataFetcher.pollInterval = m.constants.POLL_INTERVAL
+    m.dataFetcher.useDiscovery = true
     m.dataFetcher.observeField("responseData", "onDataReceived")
+    m.dataFetcher.observeField("connectionStatus", "onConnectionStatus")
     m.dataFetcher.control = "run"
 
     ' Focus setup
     m.focusIndex = 0
     m.focusableCards = [m.clockCard, m.weatherCard, m.calendarCard, m.countdownCard, m.spotifyCard, m.sportsCard]
     m.top.setFocus(true)
+
+    ' Burn-in protection: shift the entire grid by a few pixels every 2 minutes
+    m.cardGrid = m.top.findNode("cardGrid")
+    m.burnInStep = 0
+    m.burnInTimer = m.top.createChild("Timer")
+    m.burnInTimer.repeat = true
+    m.burnInTimer.duration = 120
+    m.burnInTimer.observeField("fire", "onBurnInShift")
+    m.burnInTimer.control = "start"
 end sub
 
 sub onDataReceived()
     data = m.dataFetcher.responseData
     if data = invalid then return
 
-    ' Hide loading overlay on first data
+    ' Fade out loading overlay on first data
     if m.loadingOverlay.visible
-        m.loadingOverlay.visible = false
+        fadeOut = m.top.createChild("Animation")
+        fadeOut.duration = 0.5
+        fadeOut.easeFunction = "linear"
+        interp = fadeOut.createChild("FloatFieldInterpolator")
+        interp.key = [0.0, 1.0]
+        interp.keyValue = [1.0, 0.0]
+        interp.fieldToInterp = "loadingOverlay.opacity"
+        fadeOut.observeField("state", "onLoadingFadeComplete")
+        fadeOut.control = "start"
     end if
 
     ' Distribute data to cards
@@ -122,6 +141,32 @@ sub updateBackground(period as string)
 
     anim.observeField("state", "onBgFadeComplete")
     anim.control = "start"
+end sub
+
+sub onLoadingFadeComplete()
+    m.loadingOverlay.visible = false
+end sub
+
+sub onConnectionStatus()
+    status = m.dataFetcher.connectionStatus
+    statusMap = {
+        searching: "Searching for server..."
+        connecting: "Connecting..."
+        connected: "Connected"
+        reconnecting: "Reconnecting..."
+    }
+    msg = statusMap[status]
+    if msg <> invalid and m.statusLabel <> invalid
+        m.statusLabel.text = msg
+    end if
+end sub
+
+sub onBurnInShift()
+    ' Cycle through 4 positions: (0,0), (3,0), (3,3), (0,3)
+    offsets = [[0, 0], [3, 0], [3, 3], [0, 3]]
+    m.burnInStep = (m.burnInStep + 1) mod 4
+    offset = offsets[m.burnInStep]
+    m.cardGrid.translation = offset
 end sub
 
 sub onBgFadeComplete()

@@ -18,24 +18,37 @@ try {
   process.exit(1);
 }
 
-const required = [
-  ['user.name', 'Your display name'],
-  ['weather.apiKey', 'Get one free at https://openweathermap.org/api'],
-  ['weather.lat', 'Your latitude (e.g., 34.0522 for LA)'],
-  ['weather.lon', 'Your longitude (e.g., -118.2437 for LA)'],
+// Hard requirement — only the user name
+if (!config.user?.name || String(config.user.name).startsWith('YOUR_')) {
+  console.error('ERROR: Missing config "user.name" — set your display name in config.json');
+  process.exit(1);
+}
+
+// Soft requirements — warn but don't crash
+const optional = [
+  ['weather.apiKey', 'Weather module disabled. Get a free key at https://openweathermap.org/api'],
+  ['weather.lat', 'Weather module disabled. Set your latitude.'],
+  ['weather.lon', 'Weather module disabled. Set your longitude.'],
+  ['spotify.clientId', 'Spotify module disabled. Set up at https://developer.spotify.com/dashboard'],
+  ['google.credentials', 'Calendar & Photos modules disabled. Set up Google OAuth.'],
 ];
 
-for (const [path, hint] of required) {
+const missing = new Set();
+for (const [path, hint] of optional) {
   const keys = path.split('.');
   let val = config;
   for (const k of keys) val = val?.[k];
   if (val === undefined || val === null || val === '' || String(val).startsWith('YOUR_')) {
-    console.error(`ERROR: Missing config "${path}" — ${hint}`);
-    process.exit(1);
+    const module = path.split('.')[0];
+    if (!missing.has(module)) {
+      console.warn(`WARN: ${hint}`);
+      missing.add(module);
+    }
   }
 }
 
 // Defaults
+config.weather ??= {};
 config.weather.units ??= 'imperial';
 config.news ??= { feeds: [], maxItems: 5 };
 config.news.maxItems ??= 5;
@@ -45,5 +58,7 @@ config.tickers ??= { stocks: [], crypto: [] };
 config.photos ??= { albumName: 'Favorites', rotateIntervalSeconds: 45 };
 config.server ??= { port: 8888 };
 config.server.port ??= 8888;
+config.spotify ??= {};
+config.google ??= {};
 
 export default config;

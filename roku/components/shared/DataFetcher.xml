@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="DataFetcher" extends="Task">
   <interface>
-    <field id="serverUrl" type="string" />
+    <field id="serverUrl" type="string" value="" />
     <field id="pollInterval" type="integer" value="30" />
     <field id="responseData" type="assocarray" />
+    <field id="connectionStatus" type="string" value="searching" />
+    <field id="useDiscovery" type="boolean" value="true" />
   </interface>
   <script type="text/brightscript" uri="DataFetcher.brs" />
 </component>
