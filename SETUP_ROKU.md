@@ -200,7 +200,10 @@ Server changes (`server/` folder) take effect immediately since `nodemon` auto-r
 - Is your server running? Check the terminal where you ran `npm run dev`
 - Can the Roku reach your server? The Roku and laptop must be on the **same Wi-Fi network**
 - Did you update the IP in `roku/source/constants.brs`? It must match your laptop's IP exactly
-- Firewall blocking port 8888? On Mac: System Settings > Network > Firewall > allow Node.js. On Windows: allow through Windows Defender Firewall
+- Firewall blocking port 8888? Try these in order:
+  1. **Try a different port** — some firewalls only block specific ports. Change the port in `server/config.json` (under `server.port`) and update the URL in `roku/source/constants.brs` to match. Good alternatives: `8080`, `3000`, `5000`. Then restart the server and repackage/redeploy the Roku channel.
+  2. **If you can change firewall settings** — On Mac: System Settings > Network > Firewall > allow Node.js. On Windows: allow through Windows Defender Firewall.
+  3. **Use ngrok as a last resort** — run `npx ngrok http 8888` to tunnel through the firewall, then use the ngrok URL in `constants.brs` instead of a local IP. Adds latency but bypasses all firewall restrictions.
 
 ### Developer mode code doesn't work
 - Make sure you're on the **home screen** before entering the code (not inside an app)
