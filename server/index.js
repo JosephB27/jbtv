@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './utils/config.js';
 import dashboardRouter from './routes/dashboard.js';
+import spotifyRouter from './routes/spotify.js';
 import { networkInterfaces } from 'os';
 
 const app = express();
@@ -23,6 +24,7 @@ app.get('/api/discover', (req, res) => {
 });
 
 app.use('/api', dashboardRouter);
+app.use('/api/spotify', spotifyRouter);
 
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
@@ -43,5 +45,9 @@ app.listen(port, '0.0.0.0', () => {
   const ip = getLocalIp();
   console.log(`\nJBTV server running at http://${ip}:${port}`);
   console.log(`Dashboard: http://${ip}:${port}/api/dashboard`);
-  console.log(`Health:    http://${ip}:${port}/health\n`);
+  console.log(`Health:    http://${ip}:${port}/health`);
+  if (config.spotify?.clientId) {
+    console.log(`Spotify:   http://localhost:${port}/api/spotify/auth  (open in browser to connect)`);
+  }
+  console.log();
 });
