@@ -47,13 +47,17 @@ export async function getNews() {
     }
   }
 
-  // Sort newest first, deduplicate similar titles, cap
+  // Sort newest first, deduplicate similar titles, limit per source for variety
   items.sort((a, b) => b._date - a._date);
   const seen = new Set();
+  const sourceCounts = {};
+  const maxPerSource = 2;
   const deduped = items.filter(item => {
     const key = item.title.toLowerCase().slice(0, 50);
     if (seen.has(key)) return false;
     seen.add(key);
+    sourceCounts[item.source] = (sourceCounts[item.source] || 0) + 1;
+    if (sourceCounts[item.source] > maxPerSource) return false;
     return true;
   });
 
