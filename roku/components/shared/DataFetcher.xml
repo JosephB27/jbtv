@@ -6,5 +6,6 @@
     <field id="responseData" type="assocarray" />
     <field id="connectionStatus" type="string" value="connecting" />
   </interface>
+  <script type="text/brightscript" uri="pkg:/source/constants.brs" />
   <script type="text/brightscript" uri="DataFetcher.brs" />
 </component>

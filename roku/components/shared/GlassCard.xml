@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="GlassCard" extends="Group">
   <interface>
-    <field id="cardWidth" type="integer" value="800" />
-    <field id="cardHeight" type="integer" value="500" />
+    <field id="cardWidth" type="integer" value="400" />
+    <field id="cardHeight" type="integer" value="250" />
     <field id="cardTitle" type="string" value="" />
     <field id="isFocused" type="boolean" value="false" />
   </interface>
 
   <children>
-    <!-- Shadow layer -->
-    <Rectangle id="shadow"
-      color="0x00000066"
-      translation="[8, 8]" />
+    <!-- Shadow (offset, unmasked — just a soft glow) -->
+    <Poster id="shadow"
+      uri="pkg:/images/glass_card_fill.9.png"
+      blendColor="0x0000001A"
+      translation="[4, 4]" />
 
-    <!-- Glass background -->
-    <Rectangle id="glassBg"
-      color="0xFFFFFF1F" />
+    <!-- MaskGroup clips ALL card content to rounded corners -->
+    <MaskGroup id="cardMask"
+      maskUri="pkg:/images/mask_rounded_16.png"
+      maskSize="[400, 250]">
 
-    <!-- Border -->
-    <Rectangle id="border"
-      color="0x00000000">
-      <Rectangle id="borderInner"
-        color="0xFFFFFF1F" />
-    </Rectangle>
+      <!-- Glass fill background — very subtle -->
+      <Rectangle id="glassFill"
+        color="0xFFFFFF"
+        opacity="0.08"
+        width="400" height="250" />
 
-    <!-- Top accent line -->
-    <Rectangle id="accentLine"
-      color="0x00D4AA99"
-      height="2"
-      translation="[0, 0]" />
+      <!-- Title label (teal accent, uppercase, small) -->
+      <Label id="titleLabel"
+        color="0x00D4AA66"
+        translation="[36, 16]"
+        visible="false">
+        <Font role="font" uri="pkg:/fonts/Inter-Bold.ttf" size="11" />
+      </Label>
 
-    <!-- Title label -->
-    <Label id="titleLabel"
-      color="0xBBBBBBFF"
-      font="font:SmallestSystemFont"
-      translation="[32, 20]" />
+      <!-- Content area — generous padding -->
+      <Group id="contentArea"
+        translation="[36, 24]" />
+    </MaskGroup>
 
-    <!-- Content area for child components -->
-    <Group id="contentArea"
-      translation="[32, 24]" />
+    <!-- Glass border on top (unmasked, uses 9-patch for rounded border) -->
+    <Poster id="glassBorder"
+      uri="pkg:/images/glass_card_border.9.png"
+      blendColor="0xFFFFFF40" />
   </children>
 
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="GlassCard.brs" />
 </component>
