@@ -2,42 +2,54 @@
 <component name="WeatherCard" extends="Group">
   <interface>
     <field id="weatherData" type="assocarray" />
+    <field id="cardWidth" type="integer" value="700" />
+    <field id="cardHeight" type="integer" value="300" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1800" cardHeight="460" cardTitle="WEATHER">
-      <!-- Current conditions -->
+    <GlassCard id="card" cardWidth="700" cardHeight="300">
       <Group id="currentGroup">
+        <!-- Big temperature -->
         <Label id="tempLabel"
           color="0xFFFFFFFF"
-          font="font:LargestSystemFont" />
-        <Label id="feelsLikeLabel"
-          color="0xBBBBBBFF"
-          font="font:SmallestSystemFont"
-          translation="[0, 100]" />
+          translation="[0, 10]">
+          <Font role="font" uri="pkg:/fonts/Inter-Thin.ttf" size="100" />
+        </Label>
+
+        <!-- Condition + icon -->
         <Poster id="weatherIcon"
-          width="120" height="120"
-          translation="[280, 0]" />
+          width="48" height="48"
+          translation="[0, 130]" />
         <Label id="descLabel"
-          color="0xFFFFFFCC"
-          font="font:SmallSystemFont"
-          translation="[420, 20]" />
-        <Label id="detailsLabel"
-          color="0xBBBBBB99"
-          font="font:SmallestSystemFont"
-          translation="[420, 55]" />
-        <Label id="sunLabel"
-          color="0xBBBBBB99"
-          font="font:SmallestSystemFont"
-          translation="[420, 85]" />
+          color="0xFFFFFFBB"
+          translation="[56, 136]"
+          width="560">
+          <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="22" />
+        </Label>
+
+        <!-- Details line -->
+        <Label id="detailLabel"
+          color="0xFFFFFF44"
+          translation="[0, 176]"
+          width="620">
+          <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="16" />
+        </Label>
       </Group>
 
-      <!-- 5-day forecast row -->
+      <!-- Forecast row -->
       <LayoutGroup id="forecastRow"
         layoutDirection="horiz"
-        itemSpacings="[60]"
-        translation="[0, 180]">
-      </LayoutGroup>
+        itemSpacings="[20]"
+        translation="[0, 210]" />
+
+      <Label id="emptyLabel"
+        text="No weather data"
+        color="0xFFFFFF33"
+        visible="false"
+        translation="[0, 80]">
+        <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="20" />
+      </Label>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="WeatherCard.brs" />
 </component>

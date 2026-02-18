@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="CountdownCard" extends="Group">
   <interface>
-    <field id="countdownData" type="assocarray" />
+    <field id="countdownData" type="array" />
+    <field id="cardWidth" type="integer" value="448" />
+    <field id="cardHeight" type="integer" value="120" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="960" cardHeight="660" cardTitle="COUNTDOWNS">
+    <GlassCard id="card" cardWidth="448" cardHeight="120" cardTitle="UPCOMING">
       <LayoutGroup id="countdownList"
         layoutDirection="vert"
-        itemSpacings="[20]" />
+        itemSpacings="[8]" />
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="CountdownCard.brs" />
 </component>

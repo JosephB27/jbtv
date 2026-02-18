@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="NewsCard" extends="Group">
   <interface>
-    <field id="newsData" type="assocarray" />
+    <field id="newsData" type="array" />
+    <field id="cardWidth" type="integer" value="616" />
+    <field id="cardHeight" type="integer" value="280" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1440" cardHeight="310" cardTitle="NEWS">
+    <GlassCard id="card" cardWidth="616" cardHeight="280" cardTitle="NEWS">
+      <!-- Source -->
       <Label id="sourceLabel"
-        color="0x00D4AAFF"
-        font="font:SmallestSystemFont"
-        width="1340" />
+        color="0x00D4AAAA"
+        width="560">
+        <Font role="font" uri="pkg:/fonts/Inter-Bold.ttf" size="12" />
+      </Label>
+
+      <!-- Headline -->
       <Label id="headlineLabel"
-        color="0xFFFFFFFF"
-        font="font:MediumSystemFont"
-        width="1340"
+        color="0xFFFFFFEE"
+        width="560"
         wrap="true"
-        maxLines="2"
-        translation="[0, 28]" />
-      <Label id="timeLabel"
-        color="0xBBBBBB66"
-        font="font:SmallestSystemFont"
-        translation="[0, 120]" />
-      <Label id="indexLabel"
-        color="0xBBBBBB44"
-        font="font:SmallestSystemFont"
-        horizAlign="right"
-        width="1340"
-        translation="[0, 120]" />
+        maxLines="3"
+        translation="[0, 24]">
+        <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="22" />
+      </Label>
+
+      <!-- Bottom: time + dots -->
+      <Group id="bottomRow" translation="[0, 190]">
+        <Label id="timeLabel"
+          color="0xFFFFFF33">
+          <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="14" />
+        </Label>
+        <LayoutGroup id="dotRow"
+          layoutDirection="horiz"
+          itemSpacings="[6]"
+          translation="[480, 4]" />
+      </Group>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="NewsCard.brs" />
 </component>

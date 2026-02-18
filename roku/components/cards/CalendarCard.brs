@@ -1,7 +1,19 @@
 sub init()
+    m.theme = GetTheme()
+    m.card = m.top.findNode("card")
     m.eventList = m.top.findNode("eventList")
     m.emptyLabel = m.top.findNode("emptyLabel")
+    m.eventFadeMask = m.top.findNode("eventFadeMask")
+
     m.top.observeField("calendarData", "onDataChange")
+    m.top.observeField("cardWidth", "onSizeChange")
+    m.top.observeField("cardHeight", "onSizeChange")
+end sub
+
+sub onSizeChange()
+    m.card.cardWidth = m.top.cardWidth
+    m.card.cardHeight = m.top.cardHeight
+    m.eventFadeMask.maskSize = [m.top.cardWidth - 56, m.top.cardHeight - 60]
 end sub
 
 sub onDataChange()
@@ -16,66 +28,55 @@ sub onDataChange()
     end if
     m.emptyLabel.visible = false
 
+    maxEvents = 5
+    count = 0
     for each event in events
-        row = createObject("roSGNode", "Group")
+        if count >= maxEvents then exit for
 
-        ' Accent dot
-        dot = createObject("roSGNode", "Rectangle")
-        dot.width = 6
-        dot.height = 50
-        dot.translation = [0, 0]
-        if event.isNext = true
-            dot.color = "0x00D4AAFF"
+        row = createObject("roSGNode", "Group")
+        isNext = (event.isNext = true)
+
+        ' Accent bar
+        bar = createObject("roSGNode", "Rectangle")
+        bar.width = 3
+        bar.height = 32
+        if isNext
+            bar.color = m.theme.color.accent
         else
-            dot.color = "0xFFFFFF44"
+            bar.color = m.theme.color.faint
         end if
-        row.appendChild(dot)
+        row.appendChild(bar)
 
         ' Time
         timeLabel = createObject("roSGNode", "Label")
         timeLabel.text = event.time
-        timeLabel.font = "font:SmallSystemFont"
-        timeLabel.translation = [20, 0]
-        if event.isNext = true
-            timeLabel.color = "0x00D4AAFF"
+        timeLabel.width = 80
+        timeLabel.translation = [14, 0]
+        if isNext
+            timeLabel.color = m.theme.color.accent
         else
-            timeLabel.color = "0xFFFFFFCC"
+            timeLabel.color = m.theme.color.tertiary
         end if
         row.appendChild(timeLabel)
 
         ' Title
         titleLabel = createObject("roSGNode", "Label")
         titleLabel.text = event.title
-        titleLabel.font = "font:SmallSystemFont"
-        titleLabel.color = "0xFFFFFFFF"
-        titleLabel.width = 900
-        titleLabel.translation = [200, 0]
+        titleLabel.width = 400
+        titleLabel.translation = [96, 0]
+        titleLabel.color = m.theme.color.primary
         row.appendChild(titleLabel)
 
         ' Duration
         if event.duration <> invalid
             durLabel = createObject("roSGNode", "Label")
-            durLabel.text = "(" + event.duration + ")"
-            durLabel.font = "font:SmallestSystemFont"
-            durLabel.color = "0xBBBBBB99"
-            durLabel.translation = [200, 30]
+            durLabel.text = event.duration
+            durLabel.translation = [96, 18]
+            durLabel.color = m.theme.color.muted
             row.appendChild(durLabel)
         end if
 
-        ' "In X min" badge for next event
-        if event.isNext = true and event.minutesUntil <> invalid and event.minutesUntil > 0
-            badge = createObject("roSGNode", "Label")
-            if event.minutesUntil >= 60
-                badge.text = "in " + Str(int(event.minutesUntil / 60)).trim() + "h " + Str(event.minutesUntil mod 60).trim() + "m"
-            else
-                badge.text = "in " + Str(event.minutesUntil).trim() + " min"
-            end if
-            badge.font = "font:SmallestSystemFont"
-            badge.color = "0x00D4AAFF"
-            badge.translation = [900, 0]
-            row.appendChild(badge)
-        end if
-
         m.eventList.appendChild(row)
+        count = count + 1
     end for
 end sub

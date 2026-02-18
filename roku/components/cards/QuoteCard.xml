@@ -3,28 +3,28 @@
   <interface>
     <field id="quoteText" type="string" value="" />
     <field id="quoteAuthor" type="string" value="" />
+    <field id="cardWidth" type="integer" value="448" />
+    <field id="cardHeight" type="integer" value="120" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1440" cardHeight="310">
-      <Label id="quoteGlyph"
-        text="&#x201C;"
-        color="0x00D4AA88"
-        font="font:LargestSystemFont"
-        translation="[0, -20]" />
+    <GlassCard id="card" cardWidth="448" cardHeight="120">
       <Label id="quoteLabel"
-        color="0xFFFFFFDD"
-        font="font:SmallSystemFont"
-        width="1340"
+        color="0xFFFFFFAA"
+        width="400"
         wrap="true"
-        maxLines="4"
-        translation="[60, 20]" />
+        maxLines="3"
+        translation="[0, 0]">
+        <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="16" />
+      </Label>
       <Label id="authorLabel"
-        color="0xBBBBBB99"
-        font="font:SmallestSystemFont"
-        width="1340"
+        color="0xFFFFFF44"
+        width="400"
         horizAlign="right"
-        translation="[20, 220]" />
+        translation="[0, 72]">
+        <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="14" />
+      </Label>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="QuoteCard.brs" />
 </component>

@@ -2,19 +2,27 @@
 <component name="CalendarCard" extends="Group">
   <interface>
     <field id="calendarData" type="assocarray" />
+    <field id="cardWidth" type="integer" value="616" />
+    <field id="cardHeight" type="integer" value="280" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1160" cardHeight="660" cardTitle="TODAY'S SCHEDULE">
-      <LayoutGroup id="eventList"
-        layoutDirection="vert"
-        itemSpacings="[16]" />
+    <GlassCard id="card" cardWidth="616" cardHeight="280" cardTitle="SCHEDULE">
+      <MaskGroup id="eventFadeMask"
+        maskUri="pkg:/images/mask_fade_bottom.png"
+        maskSize="[560, 220]">
+        <LayoutGroup id="eventList"
+          layoutDirection="vert"
+          itemSpacings="[6]" />
+      </MaskGroup>
       <Label id="emptyLabel"
-        text="No meetings today"
-        color="0xBBBBBBFF"
-        font="font:SmallSystemFont"
+        text="No events today"
+        color="0xFFFFFF33"
         translation="[0, 60]"
-        visible="false" />
+        visible="false">
+        <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="20" />
+      </Label>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="CalendarCard.brs" />
 </component>

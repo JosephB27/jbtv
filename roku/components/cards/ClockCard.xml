@@ -3,27 +3,34 @@
   <interface>
     <field id="greeting" type="string" value="" />
     <field id="period" type="string" value="" />
+    <field id="cardWidth" type="integer" value="1020" />
+    <field id="cardHeight" type="integer" value="300" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1800" cardHeight="460">
-      <Label id="greetingLabel"
-        width="1720"
-        color="0xFFFFFFCC"
-        font="font:MediumSystemFont"
-        horizAlign="left" />
+    <GlassCard id="card" cardWidth="1020" cardHeight="300">
+      <!-- Time — the hero element, massive -->
       <Label id="timeLabel"
-        width="1720"
         color="0xFFFFFFFF"
-        font="font:LargestSystemFont"
-        horizAlign="left"
-        translation="[0, 50]" />
+        width="960"
+        translation="[0, 20]">
+        <Font role="font" uri="pkg:/fonts/Inter-Thin.ttf" size="130" />
+      </Label>
+
+      <!-- Date + Greeting below -->
       <Label id="dateLabel"
-        width="1720"
-        color="0xBBBBBBFF"
-        font="font:SmallSystemFont"
-        horizAlign="left"
-        translation="[0, 160]" />
+        color="0xFFFFFF55"
+        width="960"
+        translation="[0, 170]">
+        <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="22" />
+      </Label>
+      <Label id="greetingLabel"
+        color="0xFFFFFF88"
+        width="960"
+        translation="[0, 200]">
+        <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="22" />
+      </Label>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="ClockCard.brs" />
 </component>
