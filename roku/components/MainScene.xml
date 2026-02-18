@@ -2,51 +2,50 @@
 <component name="MainScene" extends="Scene">
   <children>
     <!-- Background layers -->
-    <Poster id="bgBottom" width="3840" height="2160" uri="pkg:/images/bg_morning.png" />
-    <Poster id="bgTop" width="3840" height="2160" opacity="0.0" />
-    <Poster id="photoBg" width="3840" height="2160" opacity="0.0" />
-    <Rectangle id="photoOverlay" width="3840" height="2160" color="0x000000AA" opacity="0.0" />
+    <Poster id="bgBottom" width="1920" height="1080" uri="pkg:/images/bg_morning.png" />
+    <Poster id="bgTop" width="1920" height="1080" opacity="0.0" />
+    <Poster id="photoBg" width="1920" height="1080" opacity="0.0" />
+    <Rectangle id="photoOverlay" width="1920" height="1080" color="0x000000AA" opacity="0.0" />
 
-    <!-- Card grid -->
+    <!-- Card grid — respecting title safe zone (96px edges) -->
     <Group id="cardGrid">
-      <!-- Top row -->
-      <ClockCard id="clockCard" translation="[80, 80]" />
-      <WeatherCard id="weatherCard" translation="[1960, 80]" />
-
-      <!-- Middle row -->
-      <CalendarCard id="calendarCard" translation="[80, 600]" />
-      <CountdownCard id="countdownCard" translation="[1320, 600]" />
-      <QuoteCard id="quoteCard" translation="[2360, 600]" />
-      <NewsCard id="newsCard" translation="[2360, 960]" />
-
-      <!-- Bottom row -->
-      <SpotifyCard id="spotifyCard" translation="[80, 1320]" />
-      <SportsCard id="sportsCard" translation="[1320, 1320]" />
+      <ClockCard id="clockCard" />
+      <WeatherCard id="weatherCard" />
+      <CalendarCard id="calendarCard" />
+      <CountdownCard id="countdownCard" />
+      <QuoteCard id="quoteCard" />
+      <NewsCard id="newsCard" />
+      <SpotifyCard id="spotifyCard" />
+      <SportsCard id="sportsCard" />
     </Group>
 
-    <!-- Ticker strip at bottom -->
-    <TickerCard id="tickerCard" translation="[80, 1880]" />
+    <TickerCard id="tickerCard" />
 
     <!-- Photo component (invisible, just data) -->
     <PhotoCard id="photoCard" />
 
     <!-- Loading overlay -->
-    <Rectangle id="loadingOverlay" width="3840" height="2160" color="0x0a0a2eff">
+    <Rectangle id="loadingOverlay" width="1920" height="1080" color="0x0a0a1aff">
       <Label id="loadingLabel"
         text="JBTV"
         color="0x00D4AAFF"
-        font="font:LargestSystemFont"
         horizAlign="center"
-        width="3840"
-        translation="[0, 900]" />
+        width="1920"
+        translation="[0, 420]">
+        <Font role="font" uri="pkg:/fonts/Inter-Thin.ttf" size="108" />
+      </Label>
       <Label id="statusLabel"
         text="Searching for server..."
-        color="0xBBBBBB88"
-        font="font:SmallSystemFont"
+        color="0xFFFFFF44"
         horizAlign="center"
-        width="3840"
-        translation="[0, 1050]" />
+        width="1920"
+        translation="[0, 550]">
+        <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="24" />
+      </Label>
     </Rectangle>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/constants.brs" />
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
+  <script type="text/brightscript" uri="pkg:/source/layout.brs" />
   <script type="text/brightscript" uri="MainScene.brs" />
 </component>
