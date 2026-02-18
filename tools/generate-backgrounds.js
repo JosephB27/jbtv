@@ -2,7 +2,7 @@
 // Usage: node generate-backgrounds.js
 // Requires: npm install canvas (in tools dir)
 
-import { createCanvas } from 'canvas';
+import { createCanvas, loadImage } from 'canvas';
 import { writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -78,69 +78,29 @@ for (const [name, config] of Object.entries(backgrounds)) {
   console.log(`Generated: ${outPath}`);
 }
 
-// Also generate splash screen
-const canvas = createCanvas(1920, 1080);
-const ctx = canvas.getContext('2d');
-const gradient = ctx.createLinearGradient(0, 0, 1920, 1080);
-gradient.addColorStop(0, '#0a0a2e');
-gradient.addColorStop(1, '#1a1a4e');
-ctx.fillStyle = gradient;
-ctx.fillRect(0, 0, 1920, 1080);
+// Generate splash screens with user's logo centered on gradient background
+const logoPath = resolve(__dirname, '..', 'roku', 'images', 'channel_logo_hd.png');
+const logo = await loadImage(logoPath);
 
-ctx.fillStyle = '#00D4AA';
-ctx.font = 'bold 120px sans-serif';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-ctx.fillText('JBTV', 960, 540);
+for (const [name, size] of [['splash_fhd.png', [1920, 1080]], ['splash_hd.png', [1280, 720]]]) {
+  const [sw, sh] = size;
+  const canvas = createCanvas(sw, sh);
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, sw, sh);
+  gradient.addColorStop(0, '#0a0a2e');
+  gradient.addColorStop(1, '#1a1a4e');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, sw, sh);
 
-const splashPath = resolve(__dirname, '..', 'roku', 'images', 'splash_fhd.png');
-writeFileSync(splashPath, canvas.toBuffer('image/png'));
-console.log(`Generated: ${splashPath}`);
+  // Scale logo to fit nicely (40% of screen height)
+  const scale = (sh * 0.4) / logo.height;
+  const lw = logo.width * scale;
+  const lh = logo.height * scale;
+  ctx.drawImage(logo, (sw - lw) / 2, (sh - lh) / 2, lw, lh);
 
-// HD splash
-const canvas2 = createCanvas(1920, 1080);
-const ctx2 = canvas2.getContext('2d');
-const g2 = ctx2.createLinearGradient(0, 0, 1920, 1080);
-g2.addColorStop(0, '#0a0a2e');
-g2.addColorStop(1, '#1a1a4e');
-ctx2.fillStyle = g2;
-ctx2.fillRect(0, 0, 1920, 1080);
-ctx2.fillStyle = '#00D4AA';
-ctx2.font = 'bold 120px sans-serif';
-ctx2.textAlign = 'center';
-ctx2.textBaseline = 'middle';
-ctx2.fillText('JBTV', 960, 540);
-const splashHdPath = resolve(__dirname, '..', 'roku', 'images', 'splash_hd.png');
-writeFileSync(splashHdPath, canvas2.toBuffer('image/png'));
-console.log(`Generated: ${splashHdPath}`);
-
-// Channel logos
-const logoHd = createCanvas(540, 405);
-const lctx = logoHd.getContext('2d');
-const lg = lctx.createLinearGradient(0, 0, 540, 405);
-lg.addColorStop(0, '#0a0a2e');
-lg.addColorStop(1, '#1a1a4e');
-lctx.fillStyle = lg;
-lctx.fillRect(0, 0, 540, 405);
-lctx.fillStyle = '#00D4AA';
-lctx.font = 'bold 80px sans-serif';
-lctx.textAlign = 'center';
-lctx.textBaseline = 'middle';
-lctx.fillText('JBTV', 270, 202);
-writeFileSync(resolve(__dirname, '..', 'roku', 'images', 'channel_logo_hd.png'), logoHd.toBuffer('image/png'));
-
-const logoSd = createCanvas(214, 144);
-const lctx2 = logoSd.getContext('2d');
-const lg2 = lctx2.createLinearGradient(0, 0, 214, 144);
-lg2.addColorStop(0, '#0a0a2e');
-lg2.addColorStop(1, '#1a1a4e');
-lctx2.fillStyle = lg2;
-lctx2.fillRect(0, 0, 214, 144);
-lctx2.fillStyle = '#00D4AA';
-lctx2.font = 'bold 36px sans-serif';
-lctx2.textAlign = 'center';
-lctx2.textBaseline = 'middle';
-lctx2.fillText('JBTV', 107, 72);
-writeFileSync(resolve(__dirname, '..', 'roku', 'images', 'channel_logo_sd.png'), logoSd.toBuffer('image/png'));
+  const outPath = resolve(__dirname, '..', 'roku', 'images', name);
+  writeFileSync(outPath, canvas.toBuffer('image/png'));
+  console.log(`Generated: ${outPath}`);
+}
 
 console.log('\nAll assets generated!');
