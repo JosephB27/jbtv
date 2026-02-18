@@ -1,15 +1,24 @@
 sub init()
+    m.theme = GetTheme()
+    m.card = m.top.findNode("card")
     m.nowPlayingGroup = m.top.findNode("nowPlayingGroup")
     m.recentGroup = m.top.findNode("recentGroup")
+    m.emptyGroup = m.top.findNode("emptyGroup")
     m.albumArt = m.top.findNode("albumArt")
     m.trackLabel = m.top.findNode("trackLabel")
     m.artistLabel = m.top.findNode("artistLabel")
     m.albumLabel = m.top.findNode("albumLabel")
-    m.progressBg = m.top.findNode("progressBg")
     m.progressFill = m.top.findNode("progressFill")
     m.recentList = m.top.findNode("recentList")
 
     m.top.observeField("spotifyData", "onDataChange")
+    m.top.observeField("cardWidth", "onSizeChange")
+    m.top.observeField("cardHeight", "onSizeChange")
+end sub
+
+sub onSizeChange()
+    m.card.cardWidth = m.top.cardWidth
+    m.card.cardHeight = m.top.cardHeight
 end sub
 
 sub onDataChange()
@@ -18,62 +27,42 @@ sub onDataChange()
 
     np = data.nowPlaying
     if np <> invalid and np.isPlaying = true
-        ' Show now playing
         m.nowPlayingGroup.visible = true
         m.recentGroup.visible = false
+        m.emptyGroup.visible = false
 
-        if np.albumArt <> invalid
-            m.albumArt.uri = np.albumArt
-        end if
+        if np.albumArt <> invalid then m.albumArt.uri = np.albumArt
         m.trackLabel.text = np.name
         m.artistLabel.text = np.artist
-        m.albumLabel.text = np.albumName
+        if np.albumName <> invalid then m.albumLabel.text = np.albumName
 
-        ' Progress bar
         if np.durationMs <> invalid and np.durationMs > 0 and np.progressMs <> invalid
-            ratio = np.progressMs / np.durationMs
-            m.progressFill.width = int(750 * ratio)
+            m.progressFill.width = int(700 * (np.progressMs / np.durationMs))
         end if
     else
-        ' Show recent tracks
         m.nowPlayingGroup.visible = false
-        m.recentGroup.visible = true
-
-        m.recentList.removeChildrenIndex(m.recentList.getChildCount(), 0)
         recentTracks = data.recentTracks
-        if recentTracks <> invalid
+        if recentTracks <> invalid and recentTracks.count() > 0
+            m.recentGroup.visible = true
+            m.emptyGroup.visible = false
+            m.recentList.removeChildrenIndex(m.recentList.getChildCount(), 0)
             count = 0
             for each track in recentTracks
-                if count >= 5 then exit for
+                if count >= 3 then exit for
                 row = createObject("roSGNode", "Group")
 
-                thumb = createObject("roSGNode", "Poster")
-                thumb.width = 60
-                thumb.height = 60
-                if track.albumArt <> invalid
-                    thumb.uri = track.albumArt
-                end if
-                row.appendChild(thumb)
-
                 name = createObject("roSGNode", "Label")
-                name.text = track.name
-                name.font = "font:SmallSystemFont"
-                name.color = "0xFFFFFFFF"
-                name.width = 700
-                name.translation = [80, 0]
+                name.text = track.name + "  —  " + track.artist
+                name.color = m.theme.color.secondary
+                name.width = 780
                 row.appendChild(name)
-
-                artist = createObject("roSGNode", "Label")
-                artist.text = track.artist
-                artist.font = "font:SmallestSystemFont"
-                artist.color = "0xBBBBBBFF"
-                artist.width = 700
-                artist.translation = [80, 30]
-                row.appendChild(artist)
 
                 m.recentList.appendChild(row)
                 count = count + 1
             end for
+        else
+            m.recentGroup.visible = false
+            m.emptyGroup.visible = true
         end if
     end if
 end sub

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="TickerCard" extends="Group">
   <interface>
-    <field id="tickerData" type="assocarray" />
+    <field id="tickerData" type="array" />
+    <field id="tickerWidth" type="integer" value="1760" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="3680" cardHeight="160">
-      <!-- Scrolling ticker strip -->
-      <Group id="tickerContainer">
-        <LayoutGroup id="tickerRow"
-          layoutDirection="horiz"
-          itemSpacings="[80]"
-          horizAlignment="left" />
-      </Group>
-    </GlassCard>
+    <!-- No GlassCard wrapper — ticker is borderless, just text scrolling -->
+    <Group id="tickerViewport"
+      clippingRect="[0, 0, 1760, 44]">
+      <LayoutGroup id="tickerRow1"
+        layoutDirection="horiz"
+        itemSpacings="[48]" />
+      <LayoutGroup id="tickerRow2"
+        layoutDirection="horiz"
+        itemSpacings="[48]" />
+    </Group>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="TickerCard.brs" />
 </component>

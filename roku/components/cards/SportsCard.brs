@@ -1,66 +1,69 @@
 sub init()
+    m.theme = GetTheme()
+    m.card = m.top.findNode("card")
     m.teamList = m.top.findNode("teamList")
+    m.emptyLabel = m.top.findNode("emptyLabel")
     m.top.observeField("sportsData", "onDataChange")
+    m.top.observeField("cardWidth", "onSizeChange")
+    m.top.observeField("cardHeight", "onSizeChange")
+end sub
+
+sub onSizeChange()
+    m.card.cardWidth = m.top.cardWidth
+    m.card.cardHeight = m.top.cardHeight
 end sub
 
 sub onDataChange()
     data = m.top.sportsData
     if data = invalid then return
-
     m.teamList.removeChildrenIndex(m.teamList.getChildCount(), 0)
+
+    if data.count() = 0
+        m.emptyLabel.visible = true
+        return
+    end if
+    m.emptyLabel.visible = false
 
     for each team in data
         row = createObject("roSGNode", "Group")
 
-        ' Team logo
-        if team.logo <> invalid
-            logo = createObject("roSGNode", "Poster")
-            logo.width = 60
-            logo.height = 60
-            logo.uri = team.logo
-            row.appendChild(logo)
-        end if
-
-        ' Team name + league
         nameLabel = createObject("roSGNode", "Label")
         nameLabel.text = team.team
-        nameLabel.font = "font:SmallSystemFont"
-        nameLabel.color = "0xFFFFFFFF"
-        nameLabel.translation = [80, 0]
+        nameLabel.color = m.theme.color.primary
+        nameLabel.width = 140
         row.appendChild(nameLabel)
 
         leagueLabel = createObject("roSGNode", "Label")
-        leagueLabel.text = team.league
-        leagueLabel.font = "font:SmallestSystemFont"
-        leagueLabel.color = "0xBBBBBB66"
-        leagueLabel.translation = [80, 28]
+        leagueLabel.text = UCase(team.league)
+        leagueLabel.color = m.theme.color.muted
+        leagueLabel.translation = [0, 18]
         row.appendChild(leagueLabel)
 
-        ' Last game
         if team.lastGame <> invalid
             lg = team.lastGame
-            lastLabel = createObject("roSGNode", "Label")
-            lastLabel.text = lg.result + " " + lg.score + " vs " + lg.opponent
-            lastLabel.font = "font:SmallSystemFont"
-            lastLabel.translation = [400, 0]
+            resultLabel = createObject("roSGNode", "Label")
+            resultLabel.translation = [160, 0]
             if lg.result = "W"
-                lastLabel.color = "0x4CAF50FF"
+                resultLabel.text = "W  " + lg.score + "  vs " + lg.opponent
+                resultLabel.color = m.theme.color.positive
             else if lg.result = "L"
-                lastLabel.color = "0xFF5252FF"
+                resultLabel.text = "L  " + lg.score + "  vs " + lg.opponent
+                resultLabel.color = m.theme.color.negative
             else
-                lastLabel.color = "0xFFFFFFCC"
+                resultLabel.text = lg.score + "  vs " + lg.opponent
+                resultLabel.color = m.theme.color.secondary
             end if
-            row.appendChild(lastLabel)
+            resultLabel.width = 600
+            row.appendChild(resultLabel)
         end if
 
-        ' Next game
         if team.nextGame <> invalid
             ng = team.nextGame
             nextLabel = createObject("roSGNode", "Label")
-            nextLabel.text = "Next: vs " + ng.opponent + " " + ng.date + " " + ng.time
-            nextLabel.font = "font:SmallestSystemFont"
-            nextLabel.color = "0xBBBBBB99"
-            nextLabel.translation = [400, 30]
+            nextLabel.text = "Next: " + ng.opponent + "  " + ng.date
+            nextLabel.color = m.theme.color.muted
+            nextLabel.width = 600
+            nextLabel.translation = [160, 18]
             row.appendChild(nextLabel)
         end if
 

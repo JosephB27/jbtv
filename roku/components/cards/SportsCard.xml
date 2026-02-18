@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="SportsCard" extends="Group">
   <interface>
-    <field id="sportsData" type="assocarray" />
+    <field id="sportsData" type="array" />
+    <field id="cardWidth" type="integer" value="850" />
+    <field id="cardHeight" type="integer" value="210" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1160" cardHeight="500" cardTitle="SCORES">
+    <GlassCard id="card" cardWidth="850" cardHeight="210" cardTitle="SCORES">
       <LayoutGroup id="teamList"
         layoutDirection="vert"
-        itemSpacings="[24]" />
+        itemSpacings="[12]" />
+      <Label id="emptyLabel"
+        text="No games"
+        color="0xFFFFFF22"
+        translation="[0, 40]"
+        visible="true">
+        <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="20" />
+      </Label>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="SportsCard.brs" />
 </component>

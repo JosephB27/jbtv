@@ -2,53 +2,72 @@
 <component name="SpotifyCard" extends="Group">
   <interface>
     <field id="spotifyData" type="assocarray" />
+    <field id="cardWidth" type="integer" value="870" />
+    <field id="cardHeight" type="integer" value="210" />
   </interface>
   <children>
-    <GlassCard id="card" cardWidth="1160" cardHeight="500" cardTitle="SPOTIFY">
-      <!-- Now Playing state -->
+    <GlassCard id="card" cardWidth="870" cardHeight="210" cardTitle="SPOTIFY">
+      <!-- Now Playing -->
       <Group id="nowPlayingGroup" visible="false">
-        <Poster id="albumArt"
-          width="280" height="280"
-          translation="[0, 0]" />
+        <MaskGroup id="artMask"
+          maskUri="pkg:/images/mask_rounded_8.png"
+          maskSize="[100, 100]">
+          <Poster id="albumArt" width="100" height="100" />
+        </MaskGroup>
+
         <Label id="trackLabel"
           color="0xFFFFFFFF"
-          font="font:MediumSystemFont"
-          width="750"
-          translation="[310, 0]" />
+          width="700"
+          translation="[120, 8]">
+          <Font role="font" uri="pkg:/fonts/Inter-Medium.ttf" size="22" />
+        </Label>
         <Label id="artistLabel"
-          color="0xBBBBBBFF"
-          font="font:SmallSystemFont"
-          width="750"
-          translation="[310, 50]" />
+          color="0xFFFFFF77"
+          width="700"
+          translation="[120, 38]">
+          <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="18" />
+        </Label>
         <Label id="albumLabel"
-          color="0xBBBBBB88"
-          font="font:SmallestSystemFont"
-          width="750"
-          translation="[310, 85]" />
-        <!-- Progress bar background -->
+          color="0xFFFFFF44"
+          width="700"
+          translation="[120, 62]">
+          <Font role="font" uri="pkg:/fonts/Inter-Regular.ttf" size="14" />
+        </Label>
+
         <Rectangle id="progressBg"
-          color="0xFFFFFF22"
-          width="750" height="6"
-          translation="[310, 130]" />
-        <!-- Progress bar fill -->
+          color="0xFFFFFF" opacity="0.08"
+          width="700" height="2"
+          translation="[120, 90]" />
         <Rectangle id="progressFill"
           color="0x00D4AAFF"
-          width="0" height="6"
-          translation="[310, 130]" />
+          width="0" height="2"
+          translation="[120, 90]" />
       </Group>
 
-      <!-- Recent Tracks state -->
+      <!-- Recent Tracks -->
       <Group id="recentGroup" visible="false">
         <Label id="recentHeader"
           text="Recently Played"
-          color="0xBBBBBBCC"
-          font="font:SmallSystemFont" />
+          color="0xFFFFFF44">
+          <Font role="font" uri="pkg:/fonts/Inter-Medium.ttf" size="13" />
+        </Label>
         <LayoutGroup id="recentList"
           layoutDirection="vert"
-          itemSpacings="[12]"
-          translation="[0, 40]" />
+          itemSpacings="[4]"
+          translation="[0, 22]" />
+      </Group>
+
+      <!-- Empty -->
+      <Group id="emptyGroup">
+        <Label id="emptyLabel"
+          text="Not playing"
+          color="0xFFFFFF22"
+          translation="[0, 40]">
+          <Font role="font" uri="pkg:/fonts/Inter-Light.ttf" size="20" />
+        </Label>
       </Group>
     </GlassCard>
   </children>
+  <script type="text/brightscript" uri="pkg:/source/theme.brs" />
   <script type="text/brightscript" uri="SpotifyCard.brs" />
 </component>
