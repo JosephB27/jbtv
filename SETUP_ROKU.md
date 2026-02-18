@@ -22,6 +22,8 @@ You'll need this so the Roku can talk to your server.
 ipconfig getifaddr en0
 ```
 
+IP: 10.0.0.23
+
 **Windows:**
 ```bash
 ipconfig
@@ -117,6 +119,8 @@ On your Roku TV:
 3. Go to **Network**
 4. Select **About**
 5. Your IP address is listed (e.g. `192.168.1.55`)
+
+Roku TV IP Address: 10.0.0.246
 
 Write this down.
 

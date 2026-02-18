@@ -2,7 +2,7 @@
 ' Update SERVER_URL to match your backend server's local IP address
 function GetConstants()
     return {
-        SERVER_URL: "http://192.168.1.100:8888"
+        SERVER_URL: "http://10.0.0.23:8888"
         POLL_INTERVAL: 30
         ACCENT_COLOR: "#00D4AA"
         ACCENT_COLOR_RGBA: "0x00D4AAFF"
